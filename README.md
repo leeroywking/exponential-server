@@ -1,0 +1,1 @@
+The purpose of this server is to accept HTTP Post requests and reply in a variable amount of time, if the server receives an additional request while "processing" the first request the additional request will fail.
