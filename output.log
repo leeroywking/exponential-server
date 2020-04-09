@@ -1,0 +1,25 @@
+test start
+
+
+backoff run 1
+
+real	12m0.896s
+user	12m34.458s
+sys	4m25.670s
+
+
+
+BruteForce run 1
+
+real	79m14.788s
+user	85m59.775s
+sys	28m33.143s
+
+
+
+fully blocking run 1
+
+real	38m46.811s
+user	0m11.550s
+sys	0m5.305s
+

@@ -4,10 +4,10 @@ const express = require('express');
 const app = express();
 
 let locked = false;
-let lockingWorkTime = Math.floor(Math.random() * 1000);
-let nonLockingWorkTime1 = Math.floor(Math.random() * 1000);
-let nonLockingWorkTime2 = Math.floor(Math.random() * 1000);
-
+let lockingWorkTime = 100;
+let nonLockingWorkTime1 = 30;
+let nonLockingWorkTime2 = 100;
+let totalRequests = 0;
 /**
  *
  * @param {http request} req
@@ -21,6 +21,7 @@ let nonLockingWorkTime2 = Math.floor(Math.random() * 1000);
  * will block all other execution
  */
 async function workQueueHandler(req, res) {
+  totalRequests++;
   //First we will wait until nonLockingWorkTime1 completes
   await sleep(nonLockingWorkTime1);
 
@@ -28,7 +29,7 @@ async function workQueueHandler(req, res) {
   // if its already locked then we need to fail here
   if (locked) {
     res.status(500).send('failure');
-    console.log('failed attempt');
+    // console.log('failed attempt');
   } else {
     locked = true;
     await sleep(lockingWorkTime);
@@ -37,8 +38,8 @@ async function workQueueHandler(req, res) {
     // Last we will send do our last nonLockingWork
     await sleep(nonLockingWorkTime2);
 
-    res.status(200).send('Success');
-    console.log('successful attempt');
+    res.status(200).send({ totalRequests });
+    console.log({ totalRequests });
   }
 }
 
